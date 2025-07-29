@@ -1053,7 +1053,7 @@ Empyrean = Start({
 	},
 	ApplyDescription = true,
 	BreakJointsDelay = 0.255,
-	ClickFling = false,
+	ClickFling = true,
 	DefaultFlingOptions = {
 		HatFling = true,--{ MeshId="", TextureId = ""},
 		Highlight = false,
