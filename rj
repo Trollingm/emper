@@ -1,6 +1,38 @@
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local PlaceId = game.PlaceId
+local JobId = game.JobId
+
+-- automatically rejoin after 5 seconds uwu
 task.delay(5, function()
-    game:GetService("TeleportService"):QueueOnTeleport([[
-        loadstring(game:HttpGet("https://github.com/Trollingm/emper/raw/refs/heads/main/rj"))()
-    ]])
-    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game:GetService("Players").LocalPlayer)
+	if #Players:GetPlayers() <= 1 then
+		Players.LocalPlayer:Kick("\nRejoining...")
+		wait()
+		TeleportService:QueueOnTeleport([[
+			loadstring(game:HttpGet("https://github.com/Trollingm/emper/raw/refs/heads/main/rj"))()
+		]])
+		TeleportService:Teleport(PlaceId, Players.LocalPlayer)
+	else
+		TeleportService:QueueOnTeleport([[
+			loadstring(game:HttpGet("https://github.com/Trollingm/emper/raw/refs/heads/main/rj"))()
+		]])
+		TeleportService:TeleportToPlaceInstance(PlaceId, JobId, Players.LocalPlayer)
+	end
+end)
+
+-- optional manual rejoin command owo
+addcmd("rejoin", {"rj"}, function(args, speaker) 
+	if #Players:GetPlayers() <= 1 then
+		Players.LocalPlayer:Kick("\nRejoining...")
+		wait()
+		TeleportService:QueueOnTeleport([[
+			loadstring(game:HttpGet("https://github.com/Trollingm/emper/raw/refs/heads/main/rj"))()
+		]])
+		TeleportService:Teleport(PlaceId, Players.LocalPlayer)
+	else
+		TeleportService:QueueOnTeleport([[
+			loadstring(game:HttpGet("https://github.com/Trollingm/emper/raw/refs/heads/main/rj"))()
+		]])
+		TeleportService:TeleportToPlaceInstance(PlaceId, JobId, Players.LocalPlayer)
+	end
 end)
