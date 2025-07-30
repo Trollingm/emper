@@ -1,0 +1,6 @@
+task.delay(5, function()
+    game:GetService("TeleportService"):QueueOnTeleport([[
+        loadstring(game:HttpGet("https://pastebin.com/raw/YOUR_PASTE_ID_HERE"))()
+    ]])
+    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game:GetService("Players").LocalPlayer)
+end)
