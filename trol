@@ -1,66 +1,181 @@
 --[[
 	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
 ]]
--- SCRIPT DE EVENTO TEMPORAL
-local Players = game:GetService("Players")
-local Lighting = game:GetService("Lighting")
-local StarterGui = game:GetService("StarterGui")
-local SoundService = game:GetService("SoundService")
 
--- Cambiar cielo
-local sky = Instance.new("Sky", Lighting)
-sky.SkyboxBk = "rbxassetid://158118263"
-sky.SkyboxDn = "rbxassetid://158118263"
-sky.SkyboxFt = "rbxassetid://158118263"
-sky.SkyboxLf = "rbxassetid://158118263"
-sky.SkyboxRt = "rbxassetid://158118263"
-sky.SkyboxUp = "rbxassetid://158118263"
+-- ######### SCRIPT 1 START #########
 
--- Añadir partículas a todos los jugadores
-for _, player in pairs(Players:GetPlayers()) do
-    local function addParticles(character)
-        local rootPart = character:WaitForChild("HumanoidRootPart", 5) or character:FindFirstChild("Torso")
-        if rootPart then
-            local attachment = Instance.new("Attachment", rootPart)
-            local particle = Instance.new("ParticleEmitter", attachment)
-            particle.Texture = "rbxassetid://158118263"
-            particle.Rate = 25
-            particle.Lifetime = NumberRange.new(2)
-            particle.Speed = NumberRange.new(1, 2)
-            particle.Size = NumberSequence.new(2)
-            particle.LightEmission = 1
-            particle.Transparency = NumberSequence.new(0)
-            particle.SpreadAngle = Vector2.new(360, 360)
-            particle.VelocitySpread = 180
+do
+    local Players = game:GetService("Players")
+    local Lighting = game:GetService("Lighting")
+    local StarterGui = game:GetService("StarterGui")
+    local SoundService = game:GetService("SoundService")
+
+    -- Cambiar cielo
+    local sky = Instance.new("Sky", Lighting)
+    sky.SkyboxBk = "rbxassetid://158118263"
+    sky.SkyboxDn = "rbxassetid://158118263"
+    sky.SkyboxFt = "rbxassetid://158118263"
+    sky.SkyboxLf = "rbxassetid://158118263"
+    sky.SkyboxRt = "rbxassetid://158118263"
+    sky.SkyboxUp = "rbxassetid://158118263"
+
+    -- Añadir partículas a todos los jugadores
+    for _, player in pairs(Players:GetPlayers()) do
+        local function addParticles(character)
+            local rootPart = character:WaitForChild("HumanoidRootPart", 5) or character:FindFirstChild("Torso")
+            if rootPart then
+                local attachment = Instance.new("Attachment", rootPart)
+                local particle = Instance.new("ParticleEmitter", attachment)
+                particle.Texture = "rbxassetid://158118263"
+                particle.Rate = 25
+                particle.Lifetime = NumberRange.new(2)
+                particle.Speed = NumberRange.new(1, 2)
+                particle.Size = NumberSequence.new(2)
+                particle.LightEmission = 1
+                particle.Transparency = NumberSequence.new(0)
+                particle.SpreadAngle = Vector2.new(360, 360)
+                particle.VelocitySpread = 180
+            end
+        end
+
+        if player.Character then
+            addParticles(player.Character)
+        end
+
+        player.CharacterAdded:Connect(addParticles)
+    end
+
+    -- Mensaje tipo hint
+    local hint = Instance.new("Hint", workspace)
+    hint.Text = "Team c00lkidd! Join today!"
+
+    -- Música con pitch
+    local music = Instance.new("Sound", SoundService)
+    music.SoundId = "rbxassetid://95156028272944"
+    music.Looped = true
+    music.Volume = 1
+    music.Pitch = 0.2
+    music:Play()
+
+    -- Spam de notificaciones cada 2 segundos in coroutine
+    coroutine.wrap(function()
+        while true do
+            StarterGui:SetCore("SendNotification", {
+                Title = "Team c00lkidd attacks the game!",
+                Text = "TEAM C00LKIDD JOIN TODAY!",
+                Duration = 2,
+                Icon = "rbxassetid://158118263"
+            })
+            wait(2)
+        end
+    end)()
+end
+
+-- ######### SCRIPT 1 END #########
+
+
+-- ######### SCRIPT 2 START #########
+
+do
+    local decalID = 158118263
+
+    local function exPro(root)
+        for _, v in pairs(root:GetChildren()) do
+            if v:IsA("Decal") and v.Texture ~= "http://www.roblox.com/asset/?id="..decalID then
+                v.Parent = nil
+            elseif v:IsA("BasePart") then
+                v.Material = Enum.Material.Plastic
+                v.Transparency = 0
+                -- Remove existing decals to avoid duplicates
+                for _, d in pairs(v:GetChildren()) do
+                    if d:IsA("Decal") then d:Destroy() end
+                end
+                local faces = {"Front", "Back", "Right", "Left", "Top", "Bottom"}
+                for _, face in pairs(faces) do
+                    local newDecal = Instance.new("Decal", v)
+                    newDecal.Texture = "http://www.roblox.com/asset/?id="..decalID
+                    newDecal.Face = Enum.NormalId[face]
+                end
+            end
+            exPro(v)
         end
     end
 
-    if player.Character then
-        addParticles(player.Character)
+    local function asdf(root)
+        for _, v in pairs(root:GetChildren()) do
+            asdf(v)
+        end
     end
 
-    player.CharacterAdded:Connect(addParticles)
+    exPro(game.Workspace)
+    asdf(game.Workspace)
+
+    local s = Instance.new("Sky")
+    s.Name = "Sky"
+    s.Parent = game.Lighting
+    local skyboxID = 158118263
+    s.SkyboxBk = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxDn = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxFt = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxLf = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxRt = "http://www.roblox.com/asset/?id="..skyboxID
+    s.SkyboxUp = "http://www.roblox.com/asset/?id="..skyboxID
+    game.Lighting.TimeOfDay = 12	
+
+    for i, v in pairs(game.Players:GetPlayers()) do
+        if v.Character then
+            local torso = v.Character:FindFirstChild("Torso")
+            if torso then
+                local emit = Instance.new("ParticleEmitter", torso)
+                emit.Texture = "http://www.roblox.com/asset/?id="..skyboxID
+                emit.VelocitySpread = 20
+            end
+        end
+    end
 end
 
--- Mensaje tipo hint
-local hint = Instance.new("Hint", workspace)
-hint.Text = "Team c00lkidd! Join today!"
+-- ######### SCRIPT 2 END #########
 
--- Música con pitch
-local music = Instance.new("Sound", SoundService)
-music.SoundId = "rbxassetid://95156028272944"
-music.Looped = true
-music.Volume = 1
-music.Pitch = 0.2
-music:Play()
 
--- Spam de notificaciones cada 2 segundos
-while true do
-    StarterGui:SetCore("SendNotification", {
-        Title = "Team c00lkidd attacks the game!",
-        Text = "TEAM C00LKIDD JOIN TODAY!",
-        Duration = 2,
-        Icon = "rbxassetid://158118263"
-    })
-    wait(2)
+-- ######### SCRIPT 3 (GUI) START #########
+
+do
+    local gui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    local screenGui = Instance.new("ScreenGui", gui)
+
+    local function mk(pos, xdir, ydir)
+        local i = Instance.new("ImageLabel", screenGui)
+        i.Size = UDim2.new(0, 150, 0, 150)
+        i.Position = pos
+        i.BackgroundTransparency = 1
+        i.Image = "rbxassetid://158118263"
+        local xs, ys = 600, 450
+        local lx, ly = tick(), tick()
+        local xd, yd = xdir, ydir
+        game:GetService("RunService").RenderStepped:Connect(function()
+            local t = tick()
+            local dt = t - lx
+            lx = t
+            local p = i.Position
+            local x, y = p.X.Offset + xs * xd * dt, p.Y.Offset + ys * yd * dt
+            local s = workspace.CurrentCamera.ViewportSize
+            if x < 0 then
+                x, xd = 0, 1
+            elseif x + 150 > s.X then
+                x, xd = s.X - 150, -1
+            end
+            if y < 0 then
+                y, yd = 0, 1
+            elseif y + 150 > s.Y then
+                y, yd = s.Y - 150, -1
+            end
+            i.Position = UDim2.new(0, x, 0, y)
+        end)
+    end
+
+    mk(UDim2.new(0, 0, 0, 0), 1, 1)
+    wait(5)
+    mk(UDim2.new(1, -150, 1, -150), -1, -1)
 end
+
+-- ######### SCRIPT 3 (GUI) END #########
