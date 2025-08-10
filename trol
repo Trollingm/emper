@@ -1,16 +1,16 @@
---[[
-	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
-]]
+if not isfolder("PWNED/") then
+    makefolder("PWNED/")
+end
 
--- ######### SCRIPT 1 START #########
+if not isfile("PWNED/pwned.ogg") then
+    writefile("PWNED/pwned.ogg", game:HttpGet("https://github.com/Trollingm/emper/raw/refs/heads/main/skeletons.ogg"))
+end
 
 do
-    local Players = game:GetService("Players")
     local Lighting = game:GetService("Lighting")
     local StarterGui = game:GetService("StarterGui")
     local SoundService = game:GetService("SoundService")
 
-    -- Cambiar cielo
     local sky = Instance.new("Sky", Lighting)
     sky.SkyboxBk = "rbxassetid://158118263"
     sky.SkyboxDn = "rbxassetid://158118263"
@@ -19,45 +19,27 @@ do
     sky.SkyboxRt = "rbxassetid://158118263"
     sky.SkyboxUp = "rbxassetid://158118263"
 
-    -- Añadir partículas a todos los jugadores
-    for _, player in pairs(Players:GetPlayers()) do
-        local function addParticles(character)
-            local rootPart = character:WaitForChild("HumanoidRootPart", 5) or character:FindFirstChild("Torso")
-            if rootPart then
-                local attachment = Instance.new("Attachment", rootPart)
-                local particle = Instance.new("ParticleEmitter", attachment)
-                particle.Texture = "rbxassetid://158118263"
-                particle.Rate = 25
-                particle.Lifetime = NumberRange.new(2)
-                particle.Speed = NumberRange.new(1, 2)
-                particle.Size = NumberSequence.new(2)
-                particle.LightEmission = 1
-                particle.Transparency = NumberSequence.new(0)
-                particle.SpreadAngle = Vector2.new(360, 360)
-                particle.VelocitySpread = 180
-            end
-        end
-
-        if player.Character then
-            addParticles(player.Character)
-        end
-
-        player.CharacterAdded:Connect(addParticles)
-    end
-
-    -- Mensaje tipo hint
     local hint = Instance.new("Hint", workspace)
     hint.Text = "Team c00lkidd! Join today!"
 
-    -- Música con pitch
     local music = Instance.new("Sound", SoundService)
-    music.SoundId = "rbxassetid://95156028272944"
+    music.SoundId = getcustomasset("PWNED/pwned.ogg")
     music.Looped = true
     music.Volume = 1
-    music.Pitch = 0.2
+    music.Pitch = 1
     music:Play()
 
-    -- Spam de notificaciones cada 2 segundos in coroutine
+    coroutine.wrap(function()
+        while true do
+            for _, sound in pairs(SoundService:GetDescendants()) do
+                if sound:IsA("Sound") and sound ~= music then
+                    sound.Volume = 0
+                end
+            end
+            wait(0.5)
+        end
+    end)()
+
     coroutine.wrap(function()
         while true do
             StarterGui:SetCore("SendNotification", {
@@ -71,11 +53,6 @@ do
     end)()
 end
 
--- ######### SCRIPT 1 END #########
-
-
--- ######### SCRIPT 2 START #########
-
 do
     local decalID = 158118263
 
@@ -83,10 +60,8 @@ do
         for _, v in pairs(root:GetChildren()) do
             if v:IsA("Decal") and v.Texture ~= "http://www.roblox.com/asset/?id="..decalID then
                 v.Parent = nil
-            elseif v:IsA("BasePart") then
+            elseif v:IsA("BasePart") and v.Transparency == 0 then
                 v.Material = Enum.Material.Plastic
-                v.Transparency = 0
-                -- Remove existing decals to avoid duplicates
                 for _, d in pairs(v:GetChildren()) do
                     if d:IsA("Decal") then d:Destroy() end
                 end
@@ -120,9 +95,9 @@ do
     s.SkyboxLf = "http://www.roblox.com/asset/?id="..skyboxID
     s.SkyboxRt = "http://www.roblox.com/asset/?id="..skyboxID
     s.SkyboxUp = "http://www.roblox.com/asset/?id="..skyboxID
-    game.Lighting.TimeOfDay = 12	
+    game.Lighting.TimeOfDay = 12
 
-    for i, v in pairs(game.Players:GetPlayers()) do
+    for _, v in pairs(game.Players:GetPlayers()) do
         if v.Character then
             local torso = v.Character:FindFirstChild("Torso")
             if torso then
@@ -133,11 +108,6 @@ do
         end
     end
 end
-
--- ######### SCRIPT 2 END #########
-
-
--- ######### SCRIPT 3 (GUI) START #########
 
 do
     local gui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -177,5 +147,3 @@ do
     wait(5)
     mk(UDim2.new(1, -150, 1, -150), -1, -1)
 end
-
--- ######### SCRIPT 3 (GUI) END #########
