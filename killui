@@ -1,0 +1,15 @@
+task.spawn(function()
+    local Players = game:GetService("Players")
+    local LocalPlayer = Players.LocalPlayer
+
+    while true do
+        local mobileContainer = LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("ControlsUI")
+        if mobileContainer then
+            local punch = mobileContainer:FindFirstChild("MobileContainer") and mobileContainer.MobileContainer:FindFirstChild("Punch")
+            if punch then
+                punch:Destroy()
+            end
+        end
+        task.wait(0.1) -- tiny delay so it doesn't eat up all the CPU~ 
+    end
+end)
